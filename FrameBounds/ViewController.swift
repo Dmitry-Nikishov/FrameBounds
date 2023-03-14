@@ -23,7 +23,7 @@ class ViewController: UIViewController {
 
     @objc
     private func frameWidthSliderValueChangedHandler() {
-        imageView.frame.size.height = CGFloat(frameHeightSlider.value)
+        imageView.frame.size.width = CGFloat(frameWidthSlider.value)
         
 //        imageView.frame = CGRectMake(
 //                     imageView.frame.origin.x,
