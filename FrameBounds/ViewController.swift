@@ -306,148 +306,132 @@ class ViewController: UIViewController {
         return view
     }()
     
+    private lazy var controlsStackView: UIStackView = {
+        let view = UIStackView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.axis = .vertical
+        view.spacing = 10
+        view.distribution = .fillEqually
+        return view
+    }()
+    
+    private func createControlRowStackView() -> UIStackView {
+        let view = UIStackView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.axis = .horizontal
+        view.spacing = 10
+        view.distribution = .fillProportionally
+        return view
+    }
+    
+    private lazy var xPositionStackView: UIStackView = {
+        let view = createControlRowStackView()
+        view.addArrangedSubview(frameXSlider)
+        view.addArrangedSubview(frameXLabel)
+        return view
+    }()
+
+    private lazy var yPositionStackView: UIStackView = {
+        let view = createControlRowStackView()
+        view.addArrangedSubview(frameYSlider)
+        view.addArrangedSubview(frameYLabel)
+        return view
+    }()
+    
+    private lazy var frameWidthStackView: UIStackView = {
+        let view = createControlRowStackView()
+        view.addArrangedSubview(frameWidthSlider)
+        view.addArrangedSubview(frameWidthLabel)
+        return view
+    }()
+
+    private lazy var frameHeightStackView: UIStackView = {
+        let view = createControlRowStackView()
+        view.addArrangedSubview(frameHeightSlider)
+        view.addArrangedSubview(frameHeightLabel)
+        return view
+    }()
+    
+    private lazy var xBoundsStackView: UIStackView = {
+        let view = createControlRowStackView()
+        view.addArrangedSubview(boundsXSlider)
+        view.addArrangedSubview(boundsXLabel)
+        return view
+    }()
+
+    private lazy var yBoundsStackView: UIStackView = {
+        let view = createControlRowStackView()
+        view.addArrangedSubview(boundsYSlider)
+        view.addArrangedSubview(boundsYLabel)
+        return view
+    }()
+
+    private lazy var boundsWidthStackView: UIStackView = {
+        let view = createControlRowStackView()
+        view.addArrangedSubview(boundsWidthSlider)
+        view.addArrangedSubview(boundsWidthLabel)
+        return view
+    }()
+
+    private lazy var boundsHeightStackView: UIStackView = {
+        let view = createControlRowStackView()
+        view.addArrangedSubview(boundsHeightSlider)
+        view.addArrangedSubview(boundsHeightLabel)
+        return view
+    }()
+    
+    private lazy var centerXStackView: UIStackView = {
+        let view = createControlRowStackView()
+        view.addArrangedSubview(centerXSlider)
+        view.addArrangedSubview(centerXLabel)
+        return view
+    }()
+
+    private lazy var centerYStackView: UIStackView = {
+        let view = createControlRowStackView()
+        view.addArrangedSubview(centerYSlider)
+        view.addArrangedSubview(centerYLabel)
+        return view
+    }()
+
+    private lazy var rotationStackView: UIStackView = {
+        let view = createControlRowStackView()
+        view.addArrangedSubview(rotationSlider)
+        view.addArrangedSubview(rotationLabel)
+        return view
+    }()
+
     private func setupControlArea() {
-        controlArea.addSubview(frameXSlider)
-        controlArea.addSubview(frameXLabel)
-        controlArea.addSubview(frameYSlider)
-        controlArea.addSubview(frameYLabel)
-        controlArea.addSubview(frameWidthSlider)
-        controlArea.addSubview(frameWidthLabel)
-        controlArea.addSubview(frameHeightSlider)
-        controlArea.addSubview(frameHeightLabel)
+        controlArea.addSubview(controlsStackView)
         
-        controlArea.addSubview(boundsXSlider)
-        controlArea.addSubview(boundsXLabel)
-        controlArea.addSubview(boundsYSlider)
-        controlArea.addSubview(boundsYLabel)
-        controlArea.addSubview(boundsWidthSlider)
-        controlArea.addSubview(boundsWidthLabel)
-        controlArea.addSubview(boundsHeightSlider)
-        controlArea.addSubview(boundsHeightLabel)
-
-        controlArea.addSubview(centerXLabel)
-        controlArea.addSubview(centerYLabel)
-        controlArea.addSubview(centerXSlider)
-        controlArea.addSubview(centerYSlider)
-        
-        controlArea.addSubview(rotationSlider)
-        controlArea.addSubview(rotationLabel)
-        
-        let halfHeight = view.frame.height/2
-        let numberOfControlItems: CGFloat = 12
-        
+        controlsStackView.addArrangedSubview(xPositionStackView)
+        controlsStackView.addArrangedSubview(yPositionStackView)
+        controlsStackView.addArrangedSubview(frameWidthStackView)
+        controlsStackView.addArrangedSubview(frameHeightStackView)
+        controlsStackView.addArrangedSubview(xBoundsStackView)
+        controlsStackView.addArrangedSubview(yBoundsStackView)
+        controlsStackView.addArrangedSubview(boundsWidthStackView)
+        controlsStackView.addArrangedSubview(boundsHeightStackView)
+        controlsStackView.addArrangedSubview(centerXStackView)
+        controlsStackView.addArrangedSubview(centerYStackView)
+        controlsStackView.addArrangedSubview(rotationStackView)
+                        
         let constraints = [
-            frameXSlider.leadingAnchor.constraint(equalTo: controlArea.leadingAnchor),
-            frameXSlider.topAnchor.constraint(equalTo: controlArea.topAnchor),
-            frameXSlider.widthAnchor.constraint(equalToConstant: view.frame.width*0.4),
-            frameXSlider.heightAnchor.constraint(equalToConstant: halfHeight/numberOfControlItems),
-            
-            frameXLabel.trailingAnchor.constraint(equalTo: controlArea.trailingAnchor),
-            frameXLabel.leadingAnchor.constraint(equalTo: frameXSlider.trailingAnchor, constant: 10),
-            frameXLabel.topAnchor.constraint(equalTo: controlArea.topAnchor),
-            frameXLabel.heightAnchor.constraint(equalToConstant: halfHeight/numberOfControlItems),
-            
-            frameYSlider.leadingAnchor.constraint(equalTo: controlArea.leadingAnchor),
-            frameYSlider.topAnchor.constraint(equalTo: frameXSlider.bottomAnchor),
-            frameYSlider.widthAnchor.constraint(equalToConstant: view.frame.width*0.4),
-            frameYSlider.heightAnchor.constraint(equalToConstant: halfHeight/numberOfControlItems),
-            
-            frameYLabel.trailingAnchor.constraint(equalTo: controlArea.trailingAnchor),
-            frameYLabel.leadingAnchor.constraint(equalTo: frameYSlider.trailingAnchor, constant: 10),
-            frameYLabel.topAnchor.constraint(equalTo: frameYSlider.topAnchor),
-            frameYLabel.heightAnchor.constraint(equalToConstant: halfHeight/numberOfControlItems),
-
-            frameWidthSlider.leadingAnchor.constraint(equalTo: controlArea.leadingAnchor),
-            frameWidthSlider.topAnchor.constraint(equalTo: frameYSlider.bottomAnchor),
-            frameWidthSlider.widthAnchor.constraint(equalToConstant: view.frame.width*0.4),
-            frameWidthSlider.heightAnchor.constraint(equalToConstant: halfHeight/numberOfControlItems),
-            
-            frameWidthLabel.trailingAnchor.constraint(equalTo: controlArea.trailingAnchor),
-            frameWidthLabel.leadingAnchor.constraint(equalTo: frameWidthSlider.trailingAnchor, constant: 10),
-            frameWidthLabel.topAnchor.constraint(equalTo: frameWidthSlider.topAnchor),
-            frameWidthLabel.heightAnchor.constraint(equalToConstant: halfHeight/numberOfControlItems),
-
-            frameHeightSlider.leadingAnchor.constraint(equalTo: controlArea.leadingAnchor),
-            frameHeightSlider.topAnchor.constraint(equalTo: frameWidthSlider.bottomAnchor),
-            frameHeightSlider.widthAnchor.constraint(equalToConstant: view.frame.width*0.4),
-            frameHeightSlider.heightAnchor.constraint(equalToConstant: halfHeight/numberOfControlItems),
-            
-            frameHeightLabel.trailingAnchor.constraint(equalTo: controlArea.trailingAnchor),
-            frameHeightLabel.leadingAnchor.constraint(equalTo: frameHeightSlider.trailingAnchor, constant: 10),
-            frameHeightLabel.topAnchor.constraint(equalTo: frameHeightSlider.topAnchor),
-            frameHeightLabel.heightAnchor.constraint(equalToConstant: halfHeight/numberOfControlItems),
-
-            //------ bounds ----
-            boundsXSlider.leadingAnchor.constraint(equalTo: controlArea.leadingAnchor),
-            boundsXSlider.topAnchor.constraint(equalTo: frameHeightSlider.bottomAnchor),
-            boundsXSlider.widthAnchor.constraint(equalToConstant: view.frame.width*0.4),
-            boundsXSlider.heightAnchor.constraint(equalToConstant: halfHeight/numberOfControlItems),
-            
-            boundsXLabel.trailingAnchor.constraint(equalTo: controlArea.trailingAnchor),
-            boundsXLabel.leadingAnchor.constraint(equalTo: boundsXSlider.trailingAnchor, constant: 10),
-            boundsXLabel.topAnchor.constraint(equalTo: boundsXSlider.topAnchor),
-            boundsXLabel.heightAnchor.constraint(equalToConstant: halfHeight/numberOfControlItems),
-            
-            boundsYSlider.leadingAnchor.constraint(equalTo: controlArea.leadingAnchor),
-            boundsYSlider.topAnchor.constraint(equalTo: boundsXSlider.bottomAnchor),
-            boundsYSlider.widthAnchor.constraint(equalToConstant: view.frame.width*0.4),
-            boundsYSlider.heightAnchor.constraint(equalToConstant: halfHeight/numberOfControlItems),
-            
-            boundsYLabel.trailingAnchor.constraint(equalTo: controlArea.trailingAnchor),
-            boundsYLabel.leadingAnchor.constraint(equalTo: boundsYSlider.trailingAnchor, constant: 10),
-            boundsYLabel.topAnchor.constraint(equalTo: boundsYSlider.topAnchor),
-            boundsYLabel.heightAnchor.constraint(equalToConstant: halfHeight/numberOfControlItems),
-
-            boundsWidthSlider.leadingAnchor.constraint(equalTo: controlArea.leadingAnchor),
-            boundsWidthSlider.topAnchor.constraint(equalTo: boundsYSlider.bottomAnchor),
-            boundsWidthSlider.widthAnchor.constraint(equalToConstant: view.frame.width*0.4),
-            boundsWidthSlider.heightAnchor.constraint(equalToConstant: halfHeight/numberOfControlItems),
-            
-            boundsWidthLabel.trailingAnchor.constraint(equalTo: controlArea.trailingAnchor),
-            boundsWidthLabel.leadingAnchor.constraint(equalTo: boundsWidthSlider.trailingAnchor, constant: 10),
-            boundsWidthLabel.topAnchor.constraint(equalTo: boundsWidthSlider.topAnchor),
-            boundsWidthLabel.heightAnchor.constraint(equalToConstant: halfHeight/numberOfControlItems),
-
-            boundsHeightSlider.leadingAnchor.constraint(equalTo: controlArea.leadingAnchor),
-            boundsHeightSlider.topAnchor.constraint(equalTo: boundsWidthSlider.bottomAnchor),
-            boundsHeightSlider.widthAnchor.constraint(equalToConstant: view.frame.width*0.4),
-            boundsHeightSlider.heightAnchor.constraint(equalToConstant: halfHeight/numberOfControlItems),
-            
-            boundsHeightLabel.trailingAnchor.constraint(equalTo: controlArea.trailingAnchor),
-            boundsHeightLabel.leadingAnchor.constraint(equalTo: boundsHeightSlider.trailingAnchor, constant: 10),
-            boundsHeightLabel.topAnchor.constraint(equalTo: boundsHeightSlider.topAnchor),
-            boundsHeightLabel.heightAnchor.constraint(equalToConstant: halfHeight/numberOfControlItems),
-
-            centerXSlider.leadingAnchor.constraint(equalTo: controlArea.leadingAnchor),
-            centerXSlider.topAnchor.constraint(equalTo: boundsHeightSlider.bottomAnchor),
-            centerXSlider.widthAnchor.constraint(equalToConstant: view.frame.width*0.4),
-            centerXSlider.heightAnchor.constraint(equalToConstant: halfHeight/numberOfControlItems),
-            
-            centerXLabel.trailingAnchor.constraint(equalTo: controlArea.trailingAnchor),
-            centerXLabel.leadingAnchor.constraint(equalTo: centerXSlider.trailingAnchor, constant: 10),
-            centerXLabel.topAnchor.constraint(equalTo: centerXSlider.topAnchor),
-            centerXLabel.heightAnchor.constraint(equalToConstant: halfHeight/numberOfControlItems),
-
-            centerYSlider.leadingAnchor.constraint(equalTo: controlArea.leadingAnchor),
-            centerYSlider.topAnchor.constraint(equalTo: centerXSlider.bottomAnchor),
-            centerYSlider.widthAnchor.constraint(equalToConstant: view.frame.width*0.4),
-            centerYSlider.heightAnchor.constraint(equalToConstant: halfHeight/numberOfControlItems),
-            
-            centerYLabel.trailingAnchor.constraint(equalTo: controlArea.trailingAnchor),
-            centerYLabel.leadingAnchor.constraint(equalTo: centerYSlider.trailingAnchor, constant: 10),
-            centerYLabel.topAnchor.constraint(equalTo: centerYSlider.topAnchor),
-            centerYLabel.heightAnchor.constraint(equalToConstant: halfHeight/numberOfControlItems),
-
-            rotationSlider.leadingAnchor.constraint(equalTo: controlArea.leadingAnchor),
-            rotationSlider.topAnchor.constraint(equalTo: centerYSlider.bottomAnchor),
-            rotationSlider.widthAnchor.constraint(equalToConstant: view.frame.width*0.4),
-            rotationSlider.heightAnchor.constraint(equalToConstant: halfHeight/numberOfControlItems),
-            
-            rotationLabel.trailingAnchor.constraint(equalTo: controlArea.trailingAnchor),
-            rotationLabel.leadingAnchor.constraint(equalTo: rotationSlider.trailingAnchor, constant: 10),
-            rotationLabel.topAnchor.constraint(equalTo: rotationSlider.topAnchor),
-            rotationLabel.heightAnchor.constraint(equalToConstant: halfHeight/numberOfControlItems),
-
+            controlsStackView.topAnchor.constraint(equalTo: controlArea.topAnchor),
+            controlsStackView.leadingAnchor.constraint(equalTo: controlArea.leadingAnchor),
+            controlsStackView.trailingAnchor.constraint(equalTo: controlArea.trailingAnchor),
+            controlsStackView.bottomAnchor.constraint(equalTo: controlArea.bottomAnchor),
+            frameXSlider.widthAnchor.constraint(equalTo: controlArea.widthAnchor, multiplier: 0.5),
+            frameYSlider.widthAnchor.constraint(equalTo: frameXSlider.widthAnchor),
+            frameWidthSlider.widthAnchor.constraint(equalTo: frameXSlider.widthAnchor),
+            frameHeightSlider.widthAnchor.constraint(equalTo: frameXSlider.widthAnchor),
+            boundsXSlider.widthAnchor.constraint(equalTo: frameXSlider.widthAnchor),
+            boundsYSlider.widthAnchor.constraint(equalTo: frameXSlider.widthAnchor),
+            boundsWidthSlider.widthAnchor.constraint(equalTo: frameXSlider.widthAnchor),
+            boundsHeightSlider.widthAnchor.constraint(equalTo: frameXSlider.widthAnchor),
+            centerXSlider.widthAnchor.constraint(equalTo: frameXSlider.widthAnchor),
+            centerYSlider.widthAnchor.constraint(equalTo: frameXSlider.widthAnchor),
+            rotationSlider.widthAnchor.constraint(equalTo: frameXSlider.widthAnchor)
         ]
         
         NSLayoutConstraint.activate(constraints)
