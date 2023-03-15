@@ -24,12 +24,6 @@ class ViewController: UIViewController {
     @objc
     private func frameWidthSliderValueChangedHandler() {
         imageView.frame.size.width = CGFloat(frameWidthSlider.value)
-        
-//        imageView.frame = CGRectMake(
-//                     imageView.frame.origin.x,
-//                     imageView.frame.origin.y,
-//                     CGFloat(frameWidthSlider.value),
-//                     imageView.frame.height);
         updateLabels()
     }
 
@@ -75,9 +69,13 @@ class ViewController: UIViewController {
         updateLabels()
     }
     
+    private func deg2rad(_ number: Float) -> Float {
+        return number * .pi / 180
+    }
+    
     @objc
     private func rotationSliderChangedHandler() {
-        let rotation = CGAffineTransform(rotationAngle: CGFloat(rotationSlider.value))
+        let rotation = CGAffineTransform(rotationAngle: CGFloat(deg2rad(rotationSlider.value)))
         imageView.transform = rotation
         updateLabels()
     }
@@ -101,7 +99,7 @@ class ViewController: UIViewController {
             width: widthStart,
             height: heightStart
         ))
-        view.translatesAutoresizingMaskIntoConstraints = false
+        view.translatesAutoresizingMaskIntoConstraints = true
         view.image = UIImage(named: "0")
         view.contentMode = .scaleAspectFill
         return view
@@ -181,8 +179,8 @@ class ViewController: UIViewController {
     private lazy var boundsXSlider: UISlider = {
         let view = UISlider()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.minimumValue = 0
-        view.maximumValue = 100
+        view.minimumValue = Float(xPositionStart)
+        view.maximumValue = Float(xPositionFinish)
         view.addTarget(self, action: #selector(boundsXSliderValueChangedHandler), for: .valueChanged)
         return view
     }()
@@ -198,8 +196,8 @@ class ViewController: UIViewController {
     private lazy var boundsYSlider: UISlider = {
         let view = UISlider()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.minimumValue = 0
-        view.maximumValue = 100
+        view.minimumValue = Float(yPositionStart)
+        view.maximumValue = Float(yPositionFinish)
         view.addTarget(self, action: #selector(boundsYSliderValueChangedHandler), for: .valueChanged)
         return view
     }()
@@ -215,8 +213,8 @@ class ViewController: UIViewController {
     private lazy var boundsWidthSlider: UISlider = {
         let view = UISlider()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.minimumValue = 0
-        view.maximumValue = 100
+        view.minimumValue = Float(widthStart)
+        view.maximumValue = Float(widthFinish)
         view.addTarget(self, action: #selector(boundsWidthSliderValueChangedHandler), for: .valueChanged)
 
         return view
@@ -233,8 +231,8 @@ class ViewController: UIViewController {
     private lazy var boundsHeightSlider: UISlider = {
         let view = UISlider()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.minimumValue = 0
-        view.maximumValue = 100
+        view.minimumValue = Float(heightStart)
+        view.maximumValue = Float(heightFinish)
         view.addTarget(self, action: #selector(boundsHeightSliderValueChangedHandler), for: .valueChanged)
 
         return view
@@ -251,8 +249,8 @@ class ViewController: UIViewController {
     private lazy var centerXSlider: UISlider = {
         let view = UISlider()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.minimumValue = 0
-        view.maximumValue = 100
+        view.minimumValue = Float(xPositionStart)
+        view.maximumValue = Float(xPositionFinish)
         view.addTarget(self, action: #selector(centerXSliderChangedHandler), for: .valueChanged)
         return view
     }()
@@ -268,8 +266,8 @@ class ViewController: UIViewController {
     private lazy var centerYSlider: UISlider = {
         let view = UISlider()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.minimumValue = 0
-        view.maximumValue = 100
+        view.minimumValue = Float(yPositionStart)
+        view.maximumValue = Float(yPositionFinish)
         view.addTarget(self, action: #selector(centerYSliderChangedHandler), for: .valueChanged)
         return view
     }()
@@ -286,7 +284,7 @@ class ViewController: UIViewController {
         let view = UISlider()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.minimumValue = 0
-        view.maximumValue = 90
+        view.maximumValue = 360
         view.addTarget(self, action: #selector(rotationSliderChangedHandler), for: .valueChanged)
         return view
     }()
